@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_clean.c                                      :+:      :+:    :+:   */
+/*   check_clean_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 15:27:36 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/01/22 14:03:06 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/01/26 18:10:42 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 int	check_infile(char *infile)
 {
@@ -54,5 +54,19 @@ int	free_tab(char **tab)
 		i++;
 	}
 	free(tab);
+	return (0);
+}
+
+int	free_tab_int(int **fd, int nb)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb)
+	{
+		free(fd[i]);
+		i++;
+	}
+	free(fd);
 	return (0);
 }

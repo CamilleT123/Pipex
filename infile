@@ -1,21 +1,16 @@
-total 104
--rwxr-xr-x 1 ctruchot 2023_paris 17032 Jan 16 15:12 a.out
--rw-r--r-- 1 ctruchot 2023_paris   685 Jan 16 15:09 arg_parsing.c
--rw-r--r-- 1 ctruchot 2023_paris  1511 Jan 16 14:26 dup2.c
--rw-r--r-- 1 ctruchot 2023_paris  1367 Jan 15 15:42 execve.c
--rw-r--r-- 1 ctruchot 2023_paris  1287 Jan 16 14:25 exemples.c
--rw-r--r-- 1 ctruchot 2023_paris  2117 Jan 15 17:03 fork.c
--rw-r--r-- 1 ctruchot 2023_paris  2322 Jan 15 17:53 ft_split.c
--rw-r--r-- 1 ctruchot 2023_paris  1228 Jan 15 18:17 ft_strdup.c
--rw-r--r-- 1 ctruchot 2023_paris  1457 Jan 15 17:53 ft_strjoin.c
--rw-r--r-- 1 ctruchot 2023_paris  1142 Jan 15 17:54 ft_strlen.c
--rwxr-xr-x 1 ctruchot 2023_paris    60 Jan 16 15:13 infile
--rw-r--r-- 1 ctruchot 2023_paris   683 Jan 15 16:47 main.c
--rw-r--r-- 1 ctruchot 2023_paris  4631 Jan 16 14:47 main_part2.c
--rw-r--r-- 1 ctruchot 2023_paris  1332 Jan 10 15:33 Makefile
--rw-r--r-- 1 ctruchot 2023_paris  5022 Jan 16 15:11 pipe.c
--rw-r--r-- 1 ctruchot 2023_paris  3526 Jan 15 12:54 pipex.c
--rw-r--r-- 1 ctruchot 2023_paris  1342 Jan 16 15:09 pipex.h
--rw-r--r-- 1 ctruchot 2023_paris   139 Jan 15 12:28 pipex.sh
--rw-r--r-- 1 ctruchot 2023_paris   112 Jan  9 18:04 unlink.c
--rwxrwxrwx 1 ctruchot 2023_paris   246 Jan 15 15:08 userscript.sh
+total 92
+drwxr-xr-x 2 ctruchot 2023_paris   250 Jan 22 16:55 .
+drwxr-xr-x 5 ctruchot 2023_paris   195 Jan 22 15:04 ..
+-rw-r--r-- 1 ctruchot 2023_paris  2148 Jan 22 16:50 arg_parsing.c
+-rw-r--r-- 1 ctruchot 2023_paris  5808 Jan 22 16:54 arg_parsing.o
+-rw-r--r-- 1 ctruchot 2023_paris  1643 Jan 22 16:50 check_clean.c
+-rw-r--r-- 1 ctruchot 2023_paris  4112 Jan 22 16:54 check_clean.o
+-rw-r--r-- 1 ctruchot 2023_paris  2618 Jan 22 16:50 exec_bonus.c
+-rw-r--r-- 1 ctruchot 2023_paris  6048 Jan 22 16:54 exec_bonus.o
+-rw-r--r-- 1 ctruchot 2023_paris  2352 Jan 22 16:49 fork_bonus.c
+-rw-r--r-- 1 ctruchot 2023_paris     0 Jan 22 16:58 infile
+-rw-r--r-- 1 ctruchot 2023_paris  1562 Jan 22 16:54 Makefile
+-rwxr-xr-x 1 ctruchot 2023_paris 31016 Jan 22 16:54 pipex
+-rw-r--r-- 1 ctruchot 2023_paris  3272 Jan 22 16:54 pipex_bonus.c
+-rw-r--r-- 1 ctruchot 2023_paris  5968 Jan 22 16:54 pipex_bonus.o
+-rw-r--r-- 1 ctruchot 2023_paris  1859 Jan 22 16:52 pipex.h
