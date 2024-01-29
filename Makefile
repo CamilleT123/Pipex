@@ -6,7 +6,7 @@
 #    By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 13:55:47 by ctruchot          #+#    #+#              #
-#    Updated: 2024/01/26 16:50:10 by ctruchot         ###   ########.fr        #
+#    Updated: 2024/01/29 15:36:25 by ctruchot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC = pipex.c \
 		check_clean.c
 
 SRCB = pipex_bonus.c \
+		init_bonus.c \
 		exec_bonus.c \
 		arg_parsing_bonus.c \
 		check_clean_bonus.c

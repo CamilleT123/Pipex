@@ -6,11 +6,51 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:57:32 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/01/26 16:51:19 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:59:35 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+int	parsing_files(char **av, t_struc *data)
+{
+	char	*infile;
+	char	*outfile;
+
+	if (data->i == 0)
+	{
+		infile = ft_strdup(av[1]);
+		if (check_file(infile, data->i) != 0)
+			return (1);
+		data->fdinfile = open(infile, O_RDONLY);
+		if (data->fdinfile == -1)
+			return (ft_putstr_fd(strerror(errno), 2), 2);
+	}
+	if (data->i == data->nbcmd - 1)
+	{
+		outfile = ft_strdup(av[data->i + 3]);
+		if (check_file(outfile, data->i) != 0)
+			return (1);
+		data->fdoutfile = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		if (data->fdoutfile == -1)
+			return (ft_putstr_fd(strerror(errno), 2), 2);
+	}
+	return (0);
+}
+
+int	parsing_cmd(char **av, char **env, t_struc *data)
+{
+	char	**paths;
+	char	**tab;
+
+	paths = get_all_paths(env);
+	tab = ft_split(av[data->i + 2], ' ');
+	data->cmd[data->i] = check_paths(paths, tab[0]);
+	free_tab(tab);
+	if (data->cmd[data->i] == NULL)
+		return (ft_putstr_fd(strerror(errno), 2), 1);
+	return (0);
+}
 
 char	**get_all_paths(char **env)
 {
@@ -60,31 +100,31 @@ char	*check_paths(char **paths, char *tab)
 	return (free_tab(paths), NULL);
 }
 
-char	*arg_to_cmd(char *av, char **env)
-{
-	char	**paths;
-	char	**tab;
-	char	*pathfinal;
+// char	*arg_to_cmd(char *av, char **env)
+// {
+// 	char	**paths;
+// 	char	**tab;
+// 	char	*pathfinal;
 
-	paths = get_all_paths(env);
-	tab = ft_split(av, ' ');
-	pathfinal = check_paths(paths, tab[0]);
-	free_tab(tab);
-	return (pathfinal);
-}
+// 	paths = get_all_paths(env);
+// 	tab = ft_split(av, ' ');
+// 	pathfinal = check_paths(paths, tab[0]);
+// 	free_tab(tab);
+// 	return (pathfinal);
+// }
 
-char	**arg_to_exec(char *av)
-{
-	char	**tab;
+// char	**arg_to_exec(char *av)
+// {
+// 	char	**tab;
 
-	tab = ft_split(av, ' ');
-	return (tab);
-}
+// 	tab = ft_split(av, ' ');
+// 	return (tab);
+// }
 
-char	*arg_to_file(char *av)
-{
-	char	*file;
+// char	*arg_to_file(char *av)
+// {
+// 	char	*file;
 
-	file = ft_strdup(av);
-	return (file);
-}
+// 	file = ft_strdup(av);
+// 	return (file);
+// }
