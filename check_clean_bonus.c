@@ -6,11 +6,13 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 15:27:36 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/01/29 15:40:54 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:54:55 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+// checks existence and rights on the files
 
 int	check_file(char *file, int i)
 {
@@ -30,18 +32,6 @@ int	check_file(char *file, int i)
 	}
 	return (0);
 }
-
-// int	check_outfile(char *outfile)
-// {
-// 	if (access(file, F_OK) == 0 && access(file, W_OK) != 0)
-// 	{
-// 		ft_putstr_fd("permission denied: ", 2);
-// 		ft_putstr_fd(file, 2);
-// 		ft_putstr_fd("\n", 2);
-// 		return (2);
-// 	}
-// 	return (0);
-// }
 
 int	free_tab(char **tab)
 {

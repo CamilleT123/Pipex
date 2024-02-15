@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   main_bonus2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:55:43 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/01/29 17:03:16 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:31:07 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,16 @@
 #include <stdio.h>
 #include <string.h>
 
+// the real heredoc seems to write at the end of the existing outfile if it already exists and contains stuffs
+
+
 // main function checks the number of arguments 
-// as the program works from 5 arguments
+// as the program works from 5 arguments 
+// it initiates the structure
+// sets j to the number of commands - 1
+// then calls functions to create pipes and fork
+// waits for as many children as created
+// free the ???
 
 int	main(int ac, char **av, char **env)
 {
@@ -26,6 +34,11 @@ int	main(int ac, char **av, char **env)
 		ft_printf("Not enough arguments\n");
 	if (ac >= 5)
 	{
+		if (ft_strncmp(av[1], "here_doc", 9) == 0)
+			printf("LOOOO");
+			// nbcmd = ac - 4
+			// pas de infile parsing
+			// prevoir de lire dans le stdin jusqu'au av[2]
 		if (struct_init(ac, &data) != 0)
 			ft_printf(strerror(errno), 2);
 		j = data.nbcmd - 1;

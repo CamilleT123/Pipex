@@ -6,11 +6,13 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:56:13 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/01/29 17:00:32 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:05:32 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+// depending on the i (i.e which command is processed), closes and dup the relevant fd
 
 void	which_child(char **av, char **env, t_struc *data)
 {
@@ -41,6 +43,9 @@ void	which_child(char **av, char **env, t_struc *data)
 	}
 }
 
+// depending also on the i, dup the standard in or output
+// and executes the command
+
 int	exec_cmd(char **av, char **env, int fd, t_struc *data)
 {
 	char	**arg;
@@ -60,37 +65,3 @@ int	exec_cmd(char **av, char **env, int fd, t_struc *data)
 	}
 	return (0);
 }
-
-// int	exec_cmdx(char *av3, char **env, int fd)
-// {
-// 	char	**arg;
-
-// 	arg = arg_to_exec(av3);
-// 	dup2(fd, STDOUT_FILENO);
-// 	close(fd);
-// 	(void)fd;
-// 	if (execve(cmd, arg, env) == -1)
-// 	{
-// 		ft_putstr_fd(strerror(errno), 2);
-// 		free(cmd);
-// 		free_tab(arg);
-// 		return (3);
-// 	}
-// 	return (0);
-// }
-
-// int	exec_cmd2(char *av3, char *av4, char **env)
-// {
-// 	char	**arg;
-
-// 	dup2(fdfile, STDOUT_FILENO);
-// 	close(fdfile);
-// 	if (execve(cmd, arg, env) == -1)
-// 	{
-// 		ft_putstr_fd(strerror(errno), 2);
-// 		free(cmd);
-// 		free_tab(arg);
-// 		return (3);
-// 	}
-// 	return (0);
-// }

@@ -1,16 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_parsing_bonus.c                                :+:      :+:    :+:   */
+/*   arg_parsing_bonus2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:57:32 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/15 18:54:26 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:39:25 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+// here_doc_process
+// prevoir le "here_doc" ou "pipe here_doc" au debut de chaque ligne ?
+// lire ds stdin -> copier dans un fichier temporaire / invisible jusqu'a av[2]
 
 // gives an fd to infile and outfile, checking the files before
 
@@ -18,6 +22,9 @@ int	parsing_files(char **av, t_struc *data)
 {
 	char	*infile;
 	char	*outfile;
+
+	// et que bool here_doc = false
+	// si bool here_doc = true : renvoyer vers une nouvelle fonction here_doc_process
 
 	if (data->i == 0)
 	{
