@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_clean_bonus.c                                :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 15:27:36 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/15 18:54:55 by ctruchot         ###   ########.fr       */
+/*   Created: 2024/02/27 17:55:56 by ctruchot          #+#    #+#             */
+/*   Updated: 2024/02/27 17:58:15 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
-// checks existence and rights on the files
-
-int	check_file(char *file, int i)
+void	close_higher_fds(t_struc *data)
 {
-	if (i == 0 && access(file, F_OK) != 0)
+	int	l;
+
+	l = data->i + 1;
+	while (l < data->nbcmd - 1)
 	{
-		ft_putstr_fd("no such file or directory: ", 2);
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd("\n", 2);
-		return (1);
+		close(data->fd[l][0]);
+		close(data->fd[l][1]);
+		l++;
 	}
-	if (access(file, F_OK) == 0 && access(file, R_OK) != 0)
-	{
-		ft_putstr_fd("permission denied: ", 2);
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd("\n", 2);
-		return (2);
-	}
-	return (0);
+	close(data->fd[data->i][0]);
 }
 
 int	free_tab(char **tab)
@@ -52,7 +45,7 @@ int	free_tab_int(int **fd, int nb)
 	int	i;
 
 	i = 0;
-	while (i < nb)
+	while (i < nb && fd[i] != NULL)
 	{
 		free(fd[i]);
 		i++;

@@ -1,16 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_parsing.c                                      :+:      :+:    :+:   */
+/*   parse_check_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/18 16:57:32 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/01/22 14:46:50 by ctruchot         ###   ########.fr       */
+/*   Created: 2024/02/26 15:51:20 by ctruchot          #+#    #+#             */
+/*   Updated: 2024/02/27 15:13:55 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+// for the commands, gets all the possible paths provided by env and
+// checks all of them
+
+// 27 // ca fait quel message d'erreur ?
+//  34 - tester?
+int	parsing_cmd(char **av, char **env, t_struc *data)
+{
+	char	**paths;
+	char	**tab;
+
+	tab = NULL;
+	paths = get_all_paths(env);
+	if (paths == NULL)
+		return (ft_putstr_fd(strerror(errno), 2), 1);
+	if (data->here_doc == true)
+		tab = ft_split(av[data->i + 3], ' ');
+	else
+		tab = ft_split(av[data->i + 2], ' ');
+	if (tab == NULL)
+		return (ft_putstr_fd(strerror(errno), 2), free_tab(paths), 1);
+	data->cmd = check_paths(paths, tab[0]);
+	free_tab(tab);
+	if (data->cmd == NULL)
+		return (ft_putstr_fd(strerror(errno), 2), free_tab(paths), 1);
+	return (0);
+}
+
+// gets all the possible paths, splitting them
 
 char	**get_all_paths(char **env)
 {
@@ -27,9 +56,17 @@ char	**get_all_paths(char **env)
 	}
 	path = ft_substr(path, 5, ft_strlen(path));
 	paths = ft_split(path, ':');
+	if (paths == NULL)
+	{
+		if (path != NULL)
+			free(path);
+		return (NULL);
+	}
 	free(path);
 	return (paths);
 }
+
+// checks all possible paths to keep only the valid path
 
 char	*check_paths(char **paths, char *tab)
 {
@@ -58,33 +95,4 @@ char	*check_paths(char **paths, char *tab)
 	ft_putstr_fd(&tab[0], 2);
 	ft_putstr_fd("\n", 2);
 	return (free_tab(paths), NULL);
-}
-
-char	*arg_to_cmd(char *av, char **env)
-{
-	char	**paths;
-	char	**tab;
-	char	*pathfinal;
-
-	paths = get_all_paths(env);
-	tab = ft_split(av, ' ');
-	pathfinal = check_paths(paths, tab[0]);
-	free_tab(tab);
-	return (pathfinal);
-}
-
-char	**arg_to_exec(char *av)
-{
-	char	**tab;
-
-	tab = ft_split(av, ' ');
-	return (tab);
-}
-
-char	*arg_to_file(char *av)
-{
-	char	*file;
-
-	file = ft_strdup(av);
-	return (file);
 }
