@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:56:30 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 17:27:46 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:25:47 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 # include "GNL/get_next_line.h"
 # include "libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <stdbool.h>
-# include <stddef.h> 
+# include <stddef.h>
+// # include <stdio.h>  // necessaire pour perror - eliminer tous les printf
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
