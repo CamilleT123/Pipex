@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:56:13 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/27 18:12:27 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:15:59 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	create_pipes(t_struc *data)
 	{
 		if (pipe(data->fd[l]) == -1)
 		{
-			ft_putstr_fd(strerror(errno), 2);
-			clean_exit_parent(data);
+			clean_exit_parent(data, 1);
 			exit(2);
 		}
 		l++;
@@ -42,18 +41,15 @@ int	create_pipes(t_struc *data)
 
 int	ft_fork(char **av, char **env, t_struc *data)
 {
-	int	l;
-
-	l = 0;
 	while (data->i < data->nbcmd)
 	{
 		data->pid[data->i] = fork();
 		if (data->pid[data->i] < 0)
-			return (ft_putstr_fd(strerror(errno), 2), 2);
+			return (clean_exit_parent(data, 1), 2);
 		if (data->pid[data->i] == 0)
 		{
 			if (parsing_files(av, data) != 0 || parsing_cmd(av, env, data) != 0)
-				return (clean_exit_parent(data), 1);
+				return (clean_exit_parent(data, 0), 1);
 			which_process(av, env, data);
 		}
 		if (data->i >= 1)
@@ -71,12 +67,10 @@ int	ft_fork(char **av, char **env, t_struc *data)
 
 void	which_process(char **av, char **env, t_struc *data)
 {
-	int dup = 0;
 	if (data->i == 0)
 	{
 		close_higher_fds(data);
-		dup2(data->fd[0][1], STDOUT_FILENO);
-		if (dup == -1)
+		if (dup2(data->fd[0][1], STDOUT_FILENO) == -1)
 			clean_exit_process(data);
 		close(data->fd[0][1]);
 		exec_cmd(av, env, data->fdinfile, data);

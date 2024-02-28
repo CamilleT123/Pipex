@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:51:20 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/27 15:13:55 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:11:29 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 // for the commands, gets all the possible paths provided by env and
 // checks all of them
 
-// 27 // ca fait quel message d'erreur ?
-//  34 - tester?
 int	parsing_cmd(char **av, char **env, t_struc *data)
 {
 	char	**paths;
@@ -35,7 +33,7 @@ int	parsing_cmd(char **av, char **env, t_struc *data)
 	data->cmd = check_paths(paths, tab[0]);
 	free_tab(tab);
 	if (data->cmd == NULL)
-		return (ft_putstr_fd(strerror(errno), 2), free_tab(paths), 1);
+		return (1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:57:32 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/27 14:41:32 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:15:19 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 // gives an fd to infile and outfile, checking the files before
 // no need to free anything in the child when we finish with exec
-// except if exec fails ???
 
 int	parsing_files(char **av, t_struc *data)
 {
@@ -37,7 +36,7 @@ int	parsing_infile(char **av, t_struc *data)
 
 	infile = NULL;
 	if (data->here_doc == true)
-		infile = strdup(".tmpheredoc");
+		infile = ft_strdup(".tmpheredoc");
 	else
 		infile = ft_strdup(av[1]);
 	if (infile == NULL)

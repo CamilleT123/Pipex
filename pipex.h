@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:56:30 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/27 17:54:45 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:30:07 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ char		**get_all_paths(char **env);
 char		*check_paths(char **paths, char *tab);
 
 int			clean_end(t_struc *data);
-void		clean_exit_parent(t_struc *data);
+void		clean_exit_parent(t_struc *data, int err);
+void		clean_exit_here_doc(char *lim, int fd);
 int			clean_exit_process(t_struc *data);
 int			clean_exit_cmd(t_struc *data, char **arg, int fd);
 
