@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:56:30 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 17:27:46 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:04:13 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,16 @@
 
 typedef struct s_struc
 {
-	int		nbcmd;
-	int		**fd;
+	int		*fd;
 	int		*pid;
 	int		fdinfile;
 	int		fdoutfile;
 	char	*cmd;
 	int		i;
-	bool	here_doc;
 }			t_struc;
 
 int			get_here_doc(char **av);
-int			struct_init(int ac, t_struc *data, bool here_doc);
+int			struct_init(t_struc *data);
 
 int			create_pipes(t_struc *data);
 int			ft_fork(char **av, char **env, t_struc *data);

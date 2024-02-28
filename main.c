@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:55:43 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 14:10:42 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:04:18 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,23 @@ int	main(int ac, char **av, char **env)
 
 	if (ac < 5)
 		return (ft_printf("Not enough arguments\n"), 1);
-	if (ac >= 5)
+	if (ac > 5)
+		ft_printf("Too much arguments\n");
+	if (ac == 5)
 	{
-		if (ac >= 6 && ft_strncmp(av[1], "here_doc", 8) == 0)
+		if (struct_init(&data) != 0)
+			return (1);
+		if (pipe(data.fd) == -1)
 		{
-			data.here_doc = true;
-			if (get_here_doc(av) != 0)
-				return (1);
+			ft_printf("%s", strerror(errno));
+			clean_exit_parent(&data, 1);
+			exit(2);
+			return (1);
 		}
-		else
-			data.here_doc = false;
-		if (struct_init(ac, &data, data.here_doc) != 0)
-			return (1);
-		create_pipes(&data);
-		if (ft_fork(av, env, &data) != 0)
-			return (1);
-		clean_end(&data);
+		ft_fork(av, env, &data);
+		waitpid(data.pid[0], NULL, 0);
+		waitpid(data.pid[1], NULL, 0);
+		clean_exit_parent(&data, 0);
 	}
 	return (0);
 }

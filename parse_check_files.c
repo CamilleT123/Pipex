@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:57:32 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 17:15:19 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:06:40 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	parsing_files(char **av, t_struc *data)
 		if (parsing_infile(av, data) != 0)
 			return (1);
 	}
-	if (data->i == data->nbcmd - 1)
+	if (data->i == 1)
 	{
 		if (parsing_outfile(av, data) != 0)
 			return (1);
@@ -35,10 +35,7 @@ int	parsing_infile(char **av, t_struc *data)
 	char	*infile;
 
 	infile = NULL;
-	if (data->here_doc == true)
-		infile = ft_strdup(".tmpheredoc");
-	else
-		infile = ft_strdup(av[1]);
+	infile = ft_strdup(av[1]);
 	if (infile == NULL)
 		return (1);
 	if (check_file(infile, data->i) != 0)
@@ -55,18 +52,12 @@ int	parsing_outfile(char **av, t_struc *data)
 	char	*outfile;
 
 	outfile = NULL;
-	if (data->here_doc == true)
-		outfile = ft_strdup(av[data->nbcmd + 3]);
-	else
-		outfile = ft_strdup(av[data->nbcmd + 2]);
+	outfile = ft_strdup(av[4]);
 	if (outfile == NULL)
 		return (1);
 	if (check_file(outfile, data->i) != 0)
 		return (free(outfile), 1);
-	if (data->here_doc == true)
-		data->fdoutfile = open(outfile, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	else
-		data->fdoutfile = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	data->fdoutfile = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (data->fdoutfile == -1)
 		return (ft_putstr_fd(strerror(errno), 2), free(outfile), 2);
 	free(outfile);

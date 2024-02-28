@@ -6,30 +6,11 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:56:13 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 17:27:34 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:08:24 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-// function creates as many pipes as number of commands minus 1
-
-int	create_pipes(t_struc *data)
-{
-	int	l;
-
-	l = 0;
-	while (l < data->nbcmd - 1)
-	{
-		if (pipe(data->fd[l]) == -1)
-		{
-			clean_exit_parent(data, 1);
-			exit(2);
-		}
-		l++;
-	}
-	return (0);
-}
 
 // i is the index of processes and there is one process per command.
 // function forks as many times as number of commands
@@ -41,7 +22,7 @@ int	create_pipes(t_struc *data)
 
 int	ft_fork(char **av, char **env, t_struc *data)
 {
-	while (data->i < data->nbcmd)
+	while (data->i < 2)
 	{
 		data->pid[data->i] = fork();
 		if (data->pid[data->i] < 0)
@@ -52,10 +33,10 @@ int	ft_fork(char **av, char **env, t_struc *data)
 				return (clean_exit_parent(data, 0), 1);
 			which_process(av, env, data);
 		}
-		if (data->i >= 1)
+		if (data->i == 1)
 		{
-			close(data->fd[data->i - 1][0]);
-			close(data->fd[data->i - 1][1]);
+			close(data->fd[0]);
+			close(data->fd[1]);
 		}
 		data->i++;
 	}
@@ -64,36 +45,28 @@ int	ft_fork(char **av, char **env, t_struc *data)
 
 // depending on the i (i.e which command is processed),
 // closes and dup the relevant fd
-
+// close(fd[0]);
+// 		dup2(fd[1], STDOUT_FILENO);
+// 		close(fd[1]);
+		
 void	which_process(char **av, char **env, t_struc *data)
 {
 	if (data->i == 0)
 	{
-		close_higher_fds(data);
-		if (dup2(data->fd[0][1], STDOUT_FILENO) == -1)
+		close(data->fd[0]); // confirmer
+		if (dup2(data->fd[1], STDOUT_FILENO) == -1)
 			clean_exit_process(data);
-		close(data->fd[0][1]);
+		close(data->fd[1]);
 		exec_cmd(av, env, data->fdinfile, data);
 	}
-	if (data->i > 0 && data->i < data->nbcmd - 1)
+	if (data->i == 1)
 	{
-		close_higher_fds(data);
-		dup_reading_fd(data);
-		exec_cmd(av, env, data->fd[data->i][1], data);
-	}
-	if (data->i == data->nbcmd - 1)
-	{
-		dup_reading_fd(data);
+		close(data->fd[1]);
+		if (dup2(data->fd[0], STDIN_FILENO) == -1)
+			clean_exit_process(data);
+		close(data->fd[0]);		
 		exec_cmd(av, env, data->fdoutfile, data);
 	}
-}
-
-void	dup_reading_fd(t_struc *data)
-{
-	close(data->fd[data->i - 1][1]);
-	if (dup2(data->fd[data->i - 1][0], STDIN_FILENO) == -1)
-		clean_exit_process(data);
-	close(data->fd[data->i - 1][0]);
 }
 
 // depending also on the i, dup the standard in or output
@@ -107,10 +80,7 @@ int	exec_cmd(char **av, char **env, int fd, t_struc *data)
 	fdstd = STDOUT_FILENO;
 	if (data->i == 0)
 		fdstd = STDIN_FILENO;
-	if (data->here_doc == true)
-		arg = ft_split(av[data->i + 3], ' ');
-	else
-		arg = ft_split(av[data->i + 2], ' ');
+	arg = ft_split(av[data->i + 2], ' ');
 	if (arg == NULL)
 		clean_exit_cmd(data, arg, fd);
 	if (dup2(fd, fdstd) == -1)
