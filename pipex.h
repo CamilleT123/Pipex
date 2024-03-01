@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:56:30 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 18:04:13 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:20:22 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,20 @@
 
 typedef struct s_struc
 {
-	int		*fd;
-	int		*pid;
+	int		fd[2];
+	int		pid[2];
 	int		fdinfile;
 	int		fdoutfile;
 	char	*cmd;
 	int		i;
 }			t_struc;
 
-int			get_here_doc(char **av);
 int			struct_init(t_struc *data);
 
 int			create_pipes(t_struc *data);
 int			ft_fork(char **av, char **env, t_struc *data);
 void		which_process(char **av, char **env, t_struc *data);
 int			exec_cmd(char **av, char **env, int fd, t_struc *data);
-void		close_higher_fds(t_struc *data);
-void		dup_reading_fd(t_struc *data);
 
 int			parsing_files(char **av, t_struc *data);
 int			parsing_infile(char **av, t_struc *data);
@@ -57,9 +54,7 @@ int			parsing_cmd(char **av, char **env, t_struc *data);
 char		**get_all_paths(char **env);
 char		*check_paths(char **paths, char *tab);
 
-int			clean_end(t_struc *data);
 void		clean_exit_parent(t_struc *data, int err);
-void		clean_exit_here_doc(char *lim, int fd);
 int			clean_exit_process(t_struc *data);
 int			clean_exit_cmd(t_struc *data, char **arg, int fd);
 

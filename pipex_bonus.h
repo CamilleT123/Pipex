@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:56:30 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 17:25:47 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:21:39 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <limits.h>
 # include <stdbool.h>
 # include <stddef.h>
-// # include <stdio.h>  // necessaire pour perror - eliminer tous les printf
+# include <stdio.h> // necessaire pour perror - eliminer tous les printf
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
@@ -49,8 +49,11 @@ int			ft_fork(char **av, char **env, t_struc *data);
 void		which_process(char **av, char **env, t_struc *data);
 int			exec_cmd(char **av, char **env, int fd, t_struc *data);
 void		close_higher_fds(t_struc *data);
+void		close_below_fds(t_struc *data);
+
 void		dup_reading_fd(t_struc *data);
 
+int			parsing(char **av, char **env, t_struc *data);
 int			parsing_files(char **av, t_struc *data);
 int			parsing_infile(char **av, t_struc *data);
 int			parsing_outfile(char **av, t_struc *data);

@@ -6,27 +6,11 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 15:27:36 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 18:11:09 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:41:27 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-// to end parent, free all malloc vars and delete the temporary heredoc file
-
-void	clean_exit_parent(t_struc *data, int err)
-{
-	if (err == 1)
-		ft_putstr_fd(strerror(errno), 2);
-	if (data->fd != NULL)
-	{
-		// free(data->fd[0]);
-		// free(data->fd[1]);
-		free(data->fd);
-	}
-	if (data->pid != NULL)
-		free(data->pid);
-}
 
 // in case of error, free all relevant vars and close fd
 
@@ -38,7 +22,6 @@ int	clean_exit_cmd(t_struc *data, char **arg, int fd)
 	if (arg != NULL)
 		free_tab(arg);
 	close(fd);
-	clean_exit_parent(data, 0);
 	exit(0);
 }
 
@@ -60,6 +43,5 @@ int	clean_exit_process(t_struc *data)
 		close(data->fdoutfile);
 		close(data->fd[0]);
 	}
-	clean_exit_parent(data, 0);
 	exit(0);
 }

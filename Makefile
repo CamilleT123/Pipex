@@ -6,7 +6,7 @@
 #    By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 13:55:47 by ctruchot          #+#    #+#              #
-#    Updated: 2024/02/28 17:30:45 by ctruchot         ###   ########.fr        #
+#    Updated: 2024/03/01 12:40:54 by ctruchot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = pipex
 NAME_BONUS = pipex_bonus
 
 SRC = main.c \
-		init.c \
 		exec.c \
 		parse_check_files.c \
 		parse_check_cmd.c \

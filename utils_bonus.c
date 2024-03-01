@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:55:56 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 17:34:01 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:26:01 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ void	close_higher_fds(t_struc *data)
 		l++;
 	}
 	close(data->fd[data->i][0]);
+}
+
+void	close_below_fds(t_struc *data)
+{
+	int	l;
+
+	l = data->i - 1;
+	while (l <= 0)
+	{
+		close(data->fd[l][0]);
+		close(data->fd[l][1]);
+		l--;
+	}
 }
 
 int	free_tab(char **tab)

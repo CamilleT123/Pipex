@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:55:43 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 18:04:18 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:41:09 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,13 @@ int	main(int ac, char **av, char **env)
 		ft_printf("Too much arguments\n");
 	if (ac == 5)
 	{
-		if (struct_init(&data) != 0)
-			return (1);
+		ft_bzero(&data, sizeof(t_struc));
 		if (pipe(data.fd) == -1)
-		{
-			ft_printf("%s", strerror(errno));
-			clean_exit_parent(&data, 1);
-			exit(2);
+			return (ft_putstr_fd(strerror(errno), 2), 1);
+		if (ft_fork(av, env, &data) != 0)
 			return (1);
-		}
-		ft_fork(av, env, &data);
 		waitpid(data.pid[0], NULL, 0);
 		waitpid(data.pid[1], NULL, 0);
-		clean_exit_parent(&data, 0);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:56:13 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 18:08:24 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:57:17 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,34 @@ int	ft_fork(char **av, char **env, t_struc *data)
 	{
 		data->pid[data->i] = fork();
 		if (data->pid[data->i] < 0)
-			return (clean_exit_parent(data, 1), 2);
+			return (ft_putstr_fd(strerror(errno), 2), 2);
 		if (data->pid[data->i] == 0)
 		{
 			if (parsing_files(av, data) != 0 || parsing_cmd(av, env, data) != 0)
-				return (clean_exit_parent(data, 0), 1);
+			{
+				close(data->fd[1]);
+				close(data->fd[0]);
+				close(data->fdinfile);
+				close(data->fdoutfile);
+				exit (1);
+			}
 			which_process(av, env, data);
-		}
-		if (data->i == 1)
-		{
-			close(data->fd[0]);
-			close(data->fd[1]);
 		}
 		data->i++;
 	}
+	close(data->fd[0]);
+	close(data->fd[1]);
 	return (0);
 }
 
 // depending on the i (i.e which command is processed),
 // closes and dup the relevant fd
-// close(fd[0]);
-// 		dup2(fd[1], STDOUT_FILENO);
-// 		close(fd[1]);
-		
+
 void	which_process(char **av, char **env, t_struc *data)
 {
 	if (data->i == 0)
 	{
-		close(data->fd[0]); // confirmer
+		close(data->fd[0]);
 		if (dup2(data->fd[1], STDOUT_FILENO) == -1)
 			clean_exit_process(data);
 		close(data->fd[1]);
@@ -64,7 +64,7 @@ void	which_process(char **av, char **env, t_struc *data)
 		close(data->fd[1]);
 		if (dup2(data->fd[0], STDIN_FILENO) == -1)
 			clean_exit_process(data);
-		close(data->fd[0]);		
+		close(data->fd[0]);
 		exec_cmd(av, env, data->fdoutfile, data);
 	}
 }
@@ -82,11 +82,11 @@ int	exec_cmd(char **av, char **env, int fd, t_struc *data)
 		fdstd = STDIN_FILENO;
 	arg = ft_split(av[data->i + 2], ' ');
 	if (arg == NULL)
-		clean_exit_cmd(data, arg, fd);
+		return (clean_exit_cmd(data, arg, fd));
 	if (dup2(fd, fdstd) == -1)
-		clean_exit_cmd(data, arg, fd);
+		return (clean_exit_cmd(data, arg, fd));
 	close(fd);
 	if (execve(data->cmd, arg, env) == -1)
-		clean_exit_cmd(data, arg, fd);
+		return (clean_exit_cmd(data, arg, fd));
 	return (0);
 }

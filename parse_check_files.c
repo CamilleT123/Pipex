@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:57:32 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 18:06:40 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:00:27 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,13 @@ int	check_file(char *file, int i)
 		ft_putstr_fd("\n", 2);
 		return (1);
 	}
-	if (access(file, F_OK) == 0 && access(file, R_OK) != 0)
+	if ((i == 0 && access(file, F_OK) == 0 && access(file, R_OK) != 0)
+		|| (i == 1 && access(file, F_OK) == 0 && access(file, W_OK) != 0))
 	{
 		ft_putstr_fd("permission denied: ", 2);
 		ft_putstr_fd(file, 2);
 		ft_putstr_fd("\n", 2);
 		return (2);
-	}
-	if (i != 0 && access(file, F_OK) == 0 && access(file, W_OK) != 0)
-	{
-		ft_putstr_fd("permission denied: ", 2);
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd("\n", 2);
-		return (3);
 	}
 	return (0);
 }

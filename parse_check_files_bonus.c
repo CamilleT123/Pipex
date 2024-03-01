@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:57:32 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 17:33:37 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:39:33 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,49 @@
 // gives an fd to infile and outfile, checking the files before
 // no need to free anything in the child when we finish with exec
 
+int	parsing(char **av, char **env, t_struc *data)
+{
+	if (parsing_files(av, data) != 0)
+		return (1);
+	if (parsing_cmd(av, env, data) != 0)
+	{
+		if (data->i != data->nbcmd - 1)
+		{
+			close_higher_fds(data);
+			close(data->fd[data->i][1]);
+		}
+		if (data->i != 0)
+		{
+			close(data->fd[data->i -1][1]);
+			close(data->fd[data->i - 1][0]);
+		}
+		close(data->fdinfile);
+		close(data->fdoutfile);
+		return (1);
+	}
+	return (0);
+}
+
 int	parsing_files(char **av, t_struc *data)
 {
 	if (data->i == 0)
 	{
 		if (parsing_infile(av, data) != 0)
+		{
+			close(data->fd[0][1]);
+			close(data->fd[0][0]);
+			close_higher_fds(data);
 			return (1);
+		}
 	}
 	if (data->i == data->nbcmd - 1)
 	{
 		if (parsing_outfile(av, data) != 0)
+		{
+			close(data->fd[data->i - 1][1]);
+			close(data->fd[data->i - 1][0]);
 			return (1);
+		}
 	}
 	return (0);
 }

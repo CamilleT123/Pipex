@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:51:20 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/28 17:33:29 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:59:31 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parsing_cmd(char **av, char **env, t_struc *data)
 	tab = NULL;
 	paths = get_all_paths(env);
 	if (paths == NULL)
-		return (ft_putstr_fd(strerror(errno), 2), 1);
+		return (1);
 	if (data->here_doc == true)
 		tab = ft_split(av[data->i + 3], ' ');
 	else
@@ -47,17 +47,20 @@ char	**get_all_paths(char **env)
 
 	i = 0;
 	path = NULL;
-	while (path == NULL)
+	while (path == NULL && env[i])
 	{
 		path = ft_strnstr(env[i], "PATH=", 5);
 		i++;
 	}
+	if (path == NULL)
+		return (ft_putstr_fd("no path\n", 2), NULL);
 	path = ft_substr(path, 5, ft_strlen(path));
 	paths = ft_split(path, ':');
 	if (paths == NULL)
 	{
 		if (path != NULL)
 			free(path);
+		ft_putstr_fd(strerror(errno), 2);
 		return (NULL);
 	}
 	free(path);
