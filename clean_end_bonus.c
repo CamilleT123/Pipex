@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 15:27:36 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/29 15:33:41 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:09:08 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	clean_exit_parent(t_struc *data, int err)
 		}
 	}
 }
+
 // in case of error in get_here_doc
 
 void	clean_exit_here_doc(char *lim, int fd)

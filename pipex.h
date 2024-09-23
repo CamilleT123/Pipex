@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:56:30 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/01 12:20:22 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:24:34 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdbool.h>
-# include <stddef.h> 
+# include <stddef.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
@@ -51,7 +51,8 @@ int			parsing_outfile(char **av, t_struc *data);
 int			check_file(char *infile, int i);
 
 int			parsing_cmd(char **av, char **env, t_struc *data);
-char		**get_all_paths(char **env);
+char		*get_env(t_struc *data, char **env, char *ptr, char *tab);
+char		**get_all_paths(char *ptr);
 char		*check_paths(char **paths, char *tab);
 
 void		clean_exit_parent(t_struc *data, int err);

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:56:30 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/01 12:21:39 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:15:00 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ int			parsing_outfile(char **av, t_struc *data);
 int			check_file(char *infile, int i);
 
 int			parsing_cmd(char **av, char **env, t_struc *data);
-char		**get_all_paths(char **env);
+char		**get_tab(char **av, t_struc *data, char **tab);
+char		*get_env(t_struc *data, char **env, char *ptr, char *tab);
+char		**get_all_paths(char *ptr);
 char		*check_paths(char **paths, char *tab);
 
 int			clean_end(t_struc *data);
